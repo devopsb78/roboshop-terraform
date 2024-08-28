@@ -11,6 +11,7 @@ variable "vpc_cidr_block" {}
 
 
 variable "docdb" {}
+variable "rds" {}
 
 
 variable "kms_key_id" {}
