@@ -8,3 +8,10 @@ variable "env" {}
 variable "frontend_subnets" {}
 variable "public_subnets" {}
 variable "vpc_cidr_block" {}
+
+
+variable "docdb" {}
+
+
+variable "kms_key_id" {}
+variable "vault_token" {}
