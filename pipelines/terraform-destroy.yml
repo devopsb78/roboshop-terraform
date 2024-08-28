@@ -6,7 +6,7 @@ pipelines:
       git-f14e4aa:
         git: https://github.com/chinnak7416/roboshop-terraform.git
         shallow_clone: false
-        auto_update: roboshop
+        auto_update: true
         branch: main
     secure_variables:
       TF_VAR_vault_token: AES:ygJYZCYQl2/+ct0sz1iW0w==:xIVBUeUEwQmqvq2zQNIsdFXXCB6tGiE4J8bJdp7mjms=
