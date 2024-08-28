@@ -5,7 +5,7 @@ variable "components" {
 resource "aws_instance" "instance" {
 
   count                  = length(var.components)
-  ami                    = ami-041aaa64228c27239
+  ami                    = "ami-041aaa64228c27239"
   instance_type          = "t3.small"
   vpc_security_group_ids = ["sg-06080f8fcec874b2f"]
 
@@ -39,3 +39,17 @@ module "vpc" {
   vpc_cidr_block         = var.vpc_cidr_block
 }
 
+module "docdb" {
+  for_each = var.docdb
+  source   = "./modules/docdb"
+
+  env                     = var.env
+  family                  = each.value["family"]
+  instance_class          = each.value["instance_class"]
+  instance_count          = each.value["instance_count"]
+  engine_version          = each.value["engine_version"]
+  server_app_port_sg_cidr = var.backend_subnets
+  subnet_ids              = module.vpc.db_subnets
+  vpc_id                  = module.vpc.vpc_id
+  kms_key_id              = var.kms_key_id
+}
