@@ -1,28 +1,28 @@
-#variable "components" {
-#  default = ["frontend", "catalogue", "user", "cart", "payment", "shipping", "dispatch"]
-#}
-#
-#resource "aws_instance" "instance" {
-#
-#  count                  = length(var.components)
-#  ami                    = "ami-041aaa64228c27239"
-#  instance_type          = "t3.small"
-#  vpc_security_group_ids = ["sg-06080f8fcec874b2f"]
-#
-#  tags = {
-#    Name = var.components[count.index]
-#  }
-#
-#}
-#
-#resource "aws_route53_record" "record" {
-#  count   = length(var.components)
-#  zone_id = "Z01855394W8LPHGBYO8O"
-#  name    = var.components[count.index]
-#  type    = "A"
-#  ttl     = 3
-#  records = [aws_instance.instance[count.index].private_ip]
-#}
+variable "components" {
+  default = ["frontend", "catalogue", "user", "cart", "payment", "shipping", "dispatch"]
+}
+
+resource "aws_instance" "instance" {
+
+  count                  = length(var.components)
+  ami                    = "ami-0b4f379183e5706b9"
+  instance_type          = "t3.small"
+  subnet_id              = module.vpc.backend_subnets
+
+  tags = {
+    Name = var.components[count.index]
+  }
+
+}
+
+resource "aws_route53_record" "record" {
+  count   = length(var.components)
+  zone_id = "Z01855394W8LPHGBYO8O"
+  name    = var.components[count.index]
+  type    = "A"
+  ttl     = 3
+  records = [aws_instance.instance[count.index].private_ip]
+}
 
 module "vpc" {
   source = "./modules/vpc"
