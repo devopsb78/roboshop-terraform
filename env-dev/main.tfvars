@@ -5,7 +5,7 @@ zone_id       = "Z01855394W8LPHGBYO8O"
 #vpc
 vpc_cidr_block         = "10.10.0.0/24"
 default_vpc_id         = "vpc-05f7d6dce620750fd"
-default_vpc_cidr_id    = "172.31.0.0/16"
+default_vpc_cidr       = "172.31.0.0/16"
 default_route_table_id = "rtb-0e77d8908ea983bdb"
 
 frontend_subnets    = ["10.10.0.0/27", "10.10.0.32/27"]
@@ -22,4 +22,15 @@ kms_key_id          = "arn:aws:kms:us-east-1:368761340104:key/21fae37b-2fad-4b3d
 #asg
 max_capacity      = 5
 min_capacity      = 1
+
+docdb = {
+  main = {
+    family         = "docdb4.0"
+    instance_class = "db.t3.medium"
+    instance_count = 1
+    engine_version = "4.0.0"
+
+  }
+}
+
 
