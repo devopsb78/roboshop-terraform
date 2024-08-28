@@ -12,7 +12,12 @@ variable "vpc_cidr_block" {}
 
 variable "docdb" {}
 variable "rds" {}
+variable "rabbitmq" {}
 
 
 variable "kms_key_id" {}
 variable "vault_token" {}
+
+variable "bastion_nodes" {}
+variable "prometheus_nodes" {}
+variable "zone_id" {}
