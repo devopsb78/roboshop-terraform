@@ -1,0 +1,35 @@
+format_version: 10
+pipelines:
+  roboshop-tf-apply:
+    group: Terraform
+    materials:
+      git-f14e4aa:
+        git: https://github.com/chinnak7416/roboshop-terraform.git
+        shallow_clone: false
+        auto_update: true
+        branch: main
+    secure_variables:
+      TF_VAR_vault_token: AES:ygJYZCYQl2/+ct0sz1iW0w==:xIVBUeUEwQmqvq2zQNIsdFXXCB6tGiE4J8bJdp7mjms=
+    stages:
+      - DEV:
+          fetch_materials: true
+          environment_variables:
+            env: dev
+          approval:
+            type: manual
+          jobs:
+            terraform-apply:
+              tasks:
+                - exec: { command: terraform,arguments: ["init","-backend-config=env-dev/state.tfvars"], run_if: passed}
+                - exec: { command: terraform,arguments: ["apply","-var-file=env-dev/main.tfvars","-auto-approve"], run_if: passed}
+#      - PROD:
+#          fetch_materials: true
+#          environment_variables:
+#            env: prod
+#          approval:
+#            type: success
+#          jobs:
+#            terraform-apply:
+#              tasks:
+#                - exec: { command: terraform,arguments: [ "init","-backend-config=env-prod/state.tfvars" ], run_if: passed }
+#                - exec: { command: terraform,arguments: [ "apply","-var-file=env-prod/main.tfvars","-auto-approve" ], run_if: passed }
